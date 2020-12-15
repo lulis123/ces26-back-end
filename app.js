@@ -76,9 +76,6 @@ app.use('/stock',
    connectEnsureLogin.ensureLoggedIn(),
    stockController
 );
-app.use('/',(req,res,next)=>{
-   res.status(200).send("Seja bem vindo à API do exame de CES-26");
-})
 app.get('/access',
    connectEnsureLogin.ensureLoggedIn(),
    (req,res) => res.sendFile('html/login.html',
@@ -101,5 +98,8 @@ app.post('/login',(req,res,next)=>{
          return res.redirect('/access');
       }
    )
+})
+app.get('/',(req,res,next)=>{
+   res.status(200).send("Seja bem vindo à API do exame de CES-26");
 })
 app.listen(PORT);
