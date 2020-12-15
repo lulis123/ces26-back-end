@@ -9,6 +9,7 @@ const app = express();
 const morgan = require('morgan');
 const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose');
+const LocalStrategy = require("passport-local");
 const connectEnsureLogin = require('connect-ensure-login'); 
 const helmet = require('helmet');
 const router = require('./controllers/stockController');
@@ -59,10 +60,6 @@ UserDetails.register({username:'paul',active:false},'paul');
 UserDetails.register({username:'leitinho',active:false},'cabecao');
 UserDetails.register({username:'admin',active:false},'admin')
 
-passport.use(UserDetails.createStrategy());
-passport.serializeUser(UserDetails.serializeUser());
-passport.deserializeUser(UserDetails.deserializeUser());
-
 //Setting up morgan
 app.use(expressSession);
 app.use(morgan('combined'));
@@ -72,6 +69,11 @@ app.use(passport.session());
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+passport.use(new LocalStrategy(UserDetails.authenticate()));
+passport.serializeUser(UserDetails.serializeUser());
+passport.deserializeUser(UserDetails.deserializeUser());
+
 app.use('/stock',
    connectEnsureLogin.ensureLoggedIn(),
    stockController
