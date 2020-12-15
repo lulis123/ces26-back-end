@@ -79,9 +79,9 @@ app.use('/stock',
 app.use('/',(req,res,next)=>{
    res.status(200).send("Seja bem vindo à API do exame de CES-26");
 })
-/*app.get('/access',(req,res) => res.sendFile('html/login.html',
+app.get('/access',(req,res) => res.sendFile('html/login.html',
    {root: __dirname})
-);*/
+);
 app.post('/login',(req,res,next)=>{
    passport.authenticate('local',
       (err,user,info) => {
@@ -96,7 +96,7 @@ app.post('/login',(req,res,next)=>{
                return next(err);
             }
          });
-         return res.redirect('/');
+         return res.redirect('/access');
       }
    )
 })
