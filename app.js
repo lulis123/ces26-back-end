@@ -7,6 +7,14 @@ const PORT = process.env.PORT || 80;
 const cors = require('cors')
 const app = express();
 const morgan = require('morgan');
+const passport = require('passport');
+const passportLocalMongoose = require('passport-local-mongoose');
+const connectEnsureLogin = require('connect-ensure-login');
+const expressSession = require('express-session')({
+   secret: 'secret',
+   resave: false,
+   saveUninitialized: false
+});
 
 //Setting-up Mongoose
 mongoose.plugin(mongoosePatchUpdate);
@@ -24,15 +32,51 @@ mongoose.connect("mongodb+srv://db_user:OkltmzmFo5BNq5hk@cluster0.h04va.mongodb.
    process.exit();
 }); 
 
+const Schema = mongoose.Schema;
+const UserDetail = new Schema({
+   username:String,
+   password:String
+});
+
+UserDetail.plugin(passportLocalMongoose);
+const UserDetails = mongoose.model('userInfo',UserDetail,'userInfo');
+
+passport.use(UserDetails.createStrategy());
+passport.serializeUser(UserDetails.serializeUser());
+passport.deserializeUser(UserDetails.deserializeUser());
+
 //Setting up morgan
+app.use(expressSession);
 app.use(morgan('combined'));
 
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.use('/stock',stockController);
+app.use('/stock',
+   connect.EnsureLogin.ensureLoggednIn(),
+   stockController
+);
 app.use('/',(req,res,next)=>{
    res.status(200).send("Seja bem vindo à API do exame de CES-26");
 })
-
+app.post('/login',(req,res,next)=>{
+   passport.authenticate('local',
+      (err,user,info) => {
+         if(err){
+            return next(err);
+         }
+         if(!user){
+            return res.redirect('/login?info='+info);
+         }
+         req.logIn(user,function(err){
+            if(err){
+               return next(err);
+            }
+         });
+         return res.redirect('/');
+      }
+   )
+})
 app.listen(PORT);
