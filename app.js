@@ -76,11 +76,6 @@ app.use('/stock',
    connectEnsureLogin.ensureLoggedIn(),
    stockController
 );
-app.get('/access',
-   connectEnsureLogin.ensureLoggedIn(),
-   (req,res) => res.sendFile('html/login.html',
-   {root: __dirname})
-);
 app.post('/login',(req,res,next)=>{
    passport.authenticate('local',
       (err,user,info) => {
@@ -95,7 +90,7 @@ app.post('/login',(req,res,next)=>{
                return next(err);
             }
          });
-         return res.redirect('/access');
+         return res.redirect('https://cryptic-eyrie-86960.herokuapp.com/wallet');
       }
    )
 })
