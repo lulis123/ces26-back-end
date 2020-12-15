@@ -78,7 +78,13 @@ app.use('/stock',
    connectEnsureLogin.ensureLoggedIn(),
    stockController
 );
-app.post('/login',(req,res,next)=>{
+app.post('/login', passport.authenticate("local", {
+   successRedirect: "https://cryptic-eyrie-86960.herokuapp.com/wallet",
+   failureRedirect: "https://cryptic-eyrie-86960.herokuapp.com/'"
+}), function(req,res) {
+
+});
+/*(req,res,next)=>{
    passport.authenticate('local',
       (err,user,info) => {
          if(err){
@@ -87,7 +93,7 @@ app.post('/login',(req,res,next)=>{
          /*if(!user){
             return res.redirect('/login?info='+info);
          }*/
-         req.logIn(user,function(err){
+/*         req.logIn(user,function(err){
             if(err){
                return next(err);
             }
@@ -95,7 +101,7 @@ app.post('/login',(req,res,next)=>{
          return res.redirect('https://cryptic-eyrie-86960.herokuapp.com/wallet');
       }
    )
-})
+})*/
 app.get('/',(req,res,next)=>{
    res.status(200).send("Seja bem vindo à API do exame de CES-26");
 })
