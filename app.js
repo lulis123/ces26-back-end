@@ -40,6 +40,9 @@ const UserDetail = new Schema({
 
 UserDetail.plugin(passportLocalMongoose);
 const UserDetails = mongoose.model('userInfo',UserDetail,'userInfo');
+UserDetails.register({username:'paul',active:false},'paul');
+UserDetails.register({username:'leitinho',active:false},'cabecao');
+UserDetails.register({username:'admin',active:false},'admin')
 
 passport.use(UserDetails.createStrategy());
 passport.serializeUser(UserDetails.serializeUser());
@@ -55,7 +58,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use('/stock',
-   connect.EnsureLogin.ensureLoggednIn(),
+   connectEnsureLogin.ensureLoggedIn(),
    stockController
 );
 app.use('/',(req,res,next)=>{
