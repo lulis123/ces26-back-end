@@ -75,13 +75,9 @@ passport.serializeUser(UserDetails.serializeUser());
 passport.deserializeUser(UserDetails.deserializeUser());
 
 app.use('/stock',
-   connectEnsureLogin.ensureLoggedIn(),
    stockController
 );
-app.post('/login', passport.authenticate("local", {
-   successRedirect: "https://cryptic-eyrie-86960.herokuapp.com/wallet",
-   failureRedirect: "https://cryptic-eyrie-86960.herokuapp.com/'"
-}), function(req,res) {
+app.post('/login', passport.authenticate("local", {}), function(req,res) {
 
 });
 /*(req,res,next)=>{
