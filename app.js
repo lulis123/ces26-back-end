@@ -19,6 +19,7 @@ const expressSession = require('express-session')({
    saveUninitialized: false
 });
 
+app.use(cors());
 app.use(helmet.hidePoweredBy());
 /*router.use(helmet.csp({
 	defaultSrc:["'self'"],
@@ -66,7 +67,6 @@ app.use(morgan('combined'));
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
