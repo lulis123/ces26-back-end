@@ -19,7 +19,7 @@ const expressSession = require('express-session')({
 });
 
 app.use(helmet.hidePoweredBy());
-router.use(helmet.csp({
+/*router.use(helmet.csp({
 	defaultSrc:["'self'"],
 	scriptSrc:['*.google-analytics.com'],
 	styleSrc:["'unsafe-inline'"],
@@ -29,7 +29,7 @@ router.use(helmet.csp({
 	objectSrc:[],
 	mediaSrc:[],
 	frameSrc:[]
-}));
+}));*/
 
 //Setting-up Mongoose
 mongoose.plugin(mongoosePatchUpdate);
