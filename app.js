@@ -93,7 +93,7 @@ app.post('/login',(req,res,next)=>{
                return next(err);
             }
          });
-         return res.redirect('/');
+         return res.redirect('https://cryptic-eyrie-86960.herokuapp.com/wallet');
       }
    )
 })
