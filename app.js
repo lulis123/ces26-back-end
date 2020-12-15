@@ -25,7 +25,7 @@ app.use(helmet.hidePoweredBy());
 	styleSrc:["'unsafe-inline'"],
 	imgSrc:['*.google-analytics.com'],
 	connectSrc:["'none'"],
-	fontSrc:[],
+	fontSrc:['*.cryptic-eyrie-86960.herokuapp.com'],
 	objectSrc:[],
 	mediaSrc:[],
 	frameSrc:[]
@@ -88,9 +88,9 @@ app.post('/login',(req,res,next)=>{
          if(err){
             return next(err);
          }
-         if(!user){
+         /*if(!user){
             return res.redirect('/login?info='+info);
-         }
+         }*/
          req.logIn(user,function(err){
             if(err){
                return next(err);
