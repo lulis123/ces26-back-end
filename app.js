@@ -56,9 +56,9 @@ const UserDetail = new Schema({
 
 UserDetail.plugin(passportLocalMongoose);
 const UserDetails = mongoose.model('userInfo',UserDetail,'userInfo');
-UserDetails.register({username:'paul',active:false},'paul');
-UserDetails.register({username:'leitinho',active:false},'cabecao');
-UserDetails.register({username:'admin',active:false},'admin')
+UserDetails.register(new UserDetails({username:'paul'}),'paul');
+UserDetails.register(new UserDetails({username:'leitinho'}),'cabecao');
+UserDetails.register(new UserDetails({username:'admin'}),'admin')
 
 //Setting up morgan
 app.use(expressSession);
