@@ -9,12 +9,27 @@ const app = express();
 const morgan = require('morgan');
 const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose');
-const connectEnsureLogin = require('connect-ensure-login');
+const connectEnsureLogin = require('connect-ensure-login'); 
+const helmet = require('helmet');
+const router = require('./controllers/stockController');
 const expressSession = require('express-session')({
    secret: 'secret',
    resave: false,
    saveUninitialized: false
 });
+
+app.use(helmet.hidePoweredBy());
+router.use(helmet.csp({
+	defaultSrc:["'self'"],
+	scriptSrc:['*.google-analytics.com'],
+	styleSrc:["'unsafe-inline'"],
+	imgSrc:['*.google-analytics.com'],
+	connectSrc:["'none'"],
+	fontSrc:[],
+	objectSrc:[],
+	mediaSrc:[],
+	frameSrc:[]
+}));
 
 //Setting-up Mongoose
 mongoose.plugin(mongoosePatchUpdate);
