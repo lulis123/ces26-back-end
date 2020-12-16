@@ -19,7 +19,6 @@ const expressSession = require('express-session')({
    saveUninitialized: false
 });
 
-app.use(cors());
 app.use(helmet.hidePoweredBy());
 /*router.use(helmet.csp({
 	defaultSrc:["'self'"],
