@@ -76,7 +76,7 @@ passport.deserializeUser(UserDetails.deserializeUser());
 app.use('/stock',
    stockController
 );
-app.post('/login', passport.authenticate("local", {}), function(req,res) {
+app.post('/login', passport.authenticate("local"), function(req,res) {
 
 });
 /*(req,res,next)=>{
