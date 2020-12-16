@@ -19,7 +19,6 @@ const expressSession = require('express-session')({
    saveUninitialized: false
 });
 
-app.use(helmet.hidePoweredBy());
 /*router.use(helmet.csp({
 	defaultSrc:["'self'"],
 	scriptSrc:['*.google-analytics.com'],
@@ -32,6 +31,7 @@ app.use(helmet.hidePoweredBy());
 	frameSrc:[]
 }));*/
 
+app.use(cors());
 //Setting-up Mongoose
 mongoose.plugin(mongoosePatchUpdate);
 mongoose.Promise = global.Promise;
